@@ -27,9 +27,14 @@ Every resource has list, stats, get, get-by-legacy-id, create, patch and delete
 uv venv .venv && uv pip install --python .venv/bin/python -e ".[dev]"
 .venv/bin/pytest -q
 NEON_API_KEY=... .venv/bin/learning-db provision
-npm install && railway config apply && railway up --ci --service learning-api
+npm install && railway config apply   # service settings only; code deploys from GitHub (below)
 railway scale --service learning-api asia-southeast1-eqsg3a=1 us-east4-eqdc4a=0   # next to Neon and the platform
 ```
+
+Deploys (CD, since 2026-10-18): `learning-api` is connected to this repository's `main` with
+Railway's Wait for CI (`checkSuites`). A merge to `main` deploys only after the CI and security
+checks pass; a failing check leaves production on the previous deployment. Roll back by
+redeploying an earlier deployment in Railway. `railway up` is no longer used.
 
 Railway variables: `SENTRY_DSN` (error reporting; unset = off, see
 `src/cellkit/_sentry.py`), `LEARNING_DB_MODE=hosted`, `LEARNING_DB_URL_API`,
