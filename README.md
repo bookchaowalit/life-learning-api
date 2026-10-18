@@ -31,5 +31,6 @@ npm install && railway config apply && railway up --ci --service learning-api
 railway scale --service learning-api asia-southeast1-eqsg3a=1 us-east4-eqdc4a=0   # next to Neon and the platform
 ```
 
-Railway variables: `LEARNING_DB_MODE=hosted`, `LEARNING_DB_URL_API`,
+Railway variables: `SENTRY_DSN` (error reporting; unset = off, see
+`src/cellkit/_sentry.py`), `LEARNING_DB_MODE=hosted`, `LEARNING_DB_URL_API`,
 `LEARNING_JWT_PUBLIC_KEY_PEM`, `LEARNING_JWT_ISSUER`, `EMPIRE_PLATFORM_URL`.
