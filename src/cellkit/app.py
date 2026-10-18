@@ -53,6 +53,7 @@ from psycopg.types.json import Jsonb
 from pydantic import BaseModel, ConfigDict, create_model
 from pydantic import Field as PydanticField
 
+from cellkit._sentry import capture
 from cellkit.auth import Principal, TokenVerifier, Unauthenticated
 from cellkit.platform import Action, Denied, Platform, PlatformUnavailable
 from cellkit.publisher import publish_pending
@@ -385,7 +386,8 @@ def create_app(
                 execution,
                 {"status": "succeeded", "service": cell.name, **plan.audit},
             )
-        except (PlatformUnavailable, Denied):
+        except (PlatformUnavailable, Denied) as exc:
+            capture(exc)  # the write succeeded; only the audit finish failed
             log.warning(
                 json.dumps(
                     {"event": f"{cell.name}.finish_failed", "execution": str(execution)}
