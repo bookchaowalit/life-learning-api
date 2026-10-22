@@ -1,6 +1,5 @@
 """Defaults of challenges and assignments and the rules that are NOT constraints."""
 
-import pytest
 from learning_helpers import (
     ASSIGNMENTS,
     CHALLENGES,
@@ -99,11 +98,6 @@ def test_a_challenge_keeps_the_old_id_when_it_is_imported(client, owner):
     assert create_challenge(client, owner, legacy_id=321).status_code == 409
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="cellkit app.write does not catch NumericValueOutOfRange: a number above "
-    "2147483647 in an integer field ends in a 500 instead of a 422",
-)
 def test_an_integer_above_the_integer_range_is_refused_not_a_server_error(
     client, owner
 ):

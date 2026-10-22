@@ -179,11 +179,6 @@ def test_completing_before_the_start_is_refused_on_update(client, owner):
     assert noted.status_code == 200, noted.text
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="cellkit accepts NaN and Infinity for a real field: the row is stored but read back "
-    "with time_spent_minutes null (201 instead of 422)",
-)
 @pytest.mark.parametrize("not_a_number", ["NaN", "Infinity", "-Infinity"])
 def test_time_spent_that_is_not_a_finite_number_is_refused(client, owner, not_a_number):
     challenge = create_challenge(client, owner).json()
