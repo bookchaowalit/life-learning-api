@@ -66,7 +66,7 @@ def rows_of(conn: sqlite3.Connection, r: Resource) -> list[dict[str, Any]]:
     conn.row_factory = sqlite3.Row
     return [
         dict(row)
-        # nosemgrep: python.lang.security.audit.formatted-sql-query.formatted-sql-query, python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query -- reads the owner's local legacy SQLite file; table and column names come from the cell spec, not from user input
+        # nosemgrep: python.lang.security.audit.formatted-sql-query.formatted-sql-query, python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query -- legacy SQLite import: table/column names come from the repo-owned cell.yaml, never from a request
         for row in conn.execute(
             f'SELECT * FROM "{table}" ORDER BY "{r.legacy_id_from}"'
         )

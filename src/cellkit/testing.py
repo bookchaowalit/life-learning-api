@@ -46,7 +46,7 @@ class FakePlatform:
 
     @staticmethod
     def _actor(token: str) -> uuid.UUID:
-        # nosemgrep: python.jwt.security.unverified-jwt-decode.unverified-jwt-decode -- test harness only: reads sub from tokens the harness minted itself
+        # nosemgrep: python.jwt.security.unverified-jwt-decode.unverified-jwt-decode -- test fake platform reads the subject of tokens the tests minted themselves
         return uuid.UUID(jwt.decode(token, options={"verify_signature": False})["sub"])
 
     def decide(self, token: str, channel: str, action: Action) -> bool:

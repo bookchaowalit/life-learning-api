@@ -75,6 +75,8 @@ resources:
     filters:
     - challenge_id
     - status
+    ranges:
+    - [started_at, completed_at]
     fields:
       challenge_id:
         type: ref
