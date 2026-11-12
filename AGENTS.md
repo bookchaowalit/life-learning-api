@@ -7,8 +7,9 @@
   the hosted database or the hosted platform.
 - Run `.venv/bin/pytest -q`, `.venv/bin/mypy .` and `uvx ruff@0.17.1 check . && uvx ruff@0.17.1 format --check .` before committing. Migrations are append-only: never edit
   an applied file, add a new numbered one.
-- `src/cellkit` is this repository's own service code (first generated from `cell.yaml`; the shared
-  generator was retired on 2026-10-12). Change it here; there is nothing upstream to sync from.
+- The cell toolkit is the pinned `platform-cellkit` package (import name `cellkit`; owner
+  decision 2026-11-12). Kit changes go to https://github.com/bookchaowalit/platform-cellkit, then
+  bump the wheel URL in `pyproject.toml` and run `uv lock`. Never copy kit code back into `src/`.
   Cell-specific code lives in `src/solo_learning/`.
 - `learning-mcp` (stdio, see `.mcp.json`) is this cell's MCP server: tools `learning.<resource>.list|get|create|update|delete`
   call the cell API with the caller's token (`EMPIRE_TOKEN`, `EMPIRE_TOKEN_FILE` or the `owner-mcp` automation token;
